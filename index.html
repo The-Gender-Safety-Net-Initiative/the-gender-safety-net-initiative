@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gender Safety Net — Student Guidance</title>
+  <meta name="description" content="Anonymous, private guidance on rights and support pathways for students in Indian higher education.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top">
+        <span class="brand-text">
+          <strong>The Gender Safety Net Initiative</strong>
+          <small>Anonymous · Student centred</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <button type="button" class="nav-link panel-trigger is-active" data-panel="guidance" aria-selected="true">
+          Find guidance
+        </button>
+        <button type="button" class="nav-link panel-trigger" data-panel="rights" aria-selected="false">
+          Your rights
+        </button>
+        <button id="quick-exit" type="button" class="nav-link quick-exit" title="Leave this page immediately (Esc)">
+          <i class="ti ti-door-exit" aria-hidden="true"></i>
+          Leave quickly
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <h2 class="hero-topline">The Gender Safety Initiative</h2>
+        <p class="hero-eyebrow">For students in Indian higher education</p>
+        <h1>You deserve clarity, choice, <em>and support.</em></h1>
+        <p class="hero-lead">
+          Browse information at your own pace. This tool is fully anonymous, nothing you explore here is recorded, stored, or shared.
+        </p>
+        <div class="hero-actions" role="tablist" aria-label="Choose a section">
+          <button type="button" class="btn panel-trigger is-active" data-panel="guidance" aria-selected="true">
+            <i class="ti ti-compass" aria-hidden="true"></i>
+            Find guidance
+          </button>
+          <button type="button" class="btn panel-trigger" data-panel="rights" aria-selected="false">
+            <i class="ti ti-scale" aria-hidden="true"></i>
+            Your rights
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="notices">
+      <div class="notice notice-note">
+        <i class="ti ti-info-circle" aria-hidden="true"></i>
+        <p>
+          <strong>Disclaimer</strong>
+          Helpline numbers and institutional contacts can change.
+          Verify current details through your institution's official website or student services office. All guidance is general and does not constitute legal advice.
+        </p>
+      </div>
+    </div>
+
+    <div id="panel-area">
+      <div id="panel-guidance" class="page-panel is-active" role="tabpanel" aria-labelledby="seek-guidance-heading">
+        <section class="content-section">
+          <article class="info-panel">
+            <h3 class="info-panel-title">
+              <i class="ti ti-book-2" aria-hidden="true"></i>
+              What counts as sexual harassment?
+            </h3>
+            <ul class="info-list">
+              <li>Unwelcome physical contact, touching, or advances.</li>
+              <li>Requests or pressure for sexual favours.</li>
+              <li>Sexual comments, jokes, messages, or remarks.</li>
+              <li>Sharing pornography or sexually explicit content.</li>
+              <li>Stalking, repeated unwanted communication, or online harassment.</li>
+              <li>Any other unwelcome conduct of a sexual nature, whether in person or online.</li>
+            </ul>
+            <p class="info-panel-note">
+              If you're unsure whether your experience fits a legal definition, you can still use this tool.
+              You do not need to label what happened before seeking support or information.
+            </p>
+          </article>
+
+          <div id="guide-app" class="guide-shell" aria-live="polite"></div>
+        </section>
+      </div>
+
+      <div id="panel-rights" class="page-panel" role="tabpanel" aria-labelledby="your-rights-heading" hidden>
+        <section class="content-section">
+          <div class="section-intro">
+            <!-- <h2 id="your-rights-heading">Your rights</h2>
+            <p>Start with the essentials below, then explore the full legal framework and official resources.</p> -->
+          </div>
+
+          <!-- <p class="section-label">Start here</p> -->
+
+          <article class="info-panel info-panel-highlight">
+            <h3 class="info-panel-title">
+              <i class="ti ti-shield-check" aria-hidden="true"></i>
+              Your rights, simply stated
+            </h3>
+            <ul class="rights-list">
+              <li>
+                <i class="ti ti-building" aria-hidden="true"></i>
+                <span>Your college must have an ICC If it doesn't, that itself is a violation you can report to the UGC.</span>
+              </li>
+              <li>
+                <i class="ti ti-shield" aria-hidden="true"></i>
+                <span>You cannot be punished for filing If anything bad happens to you because you filed a complaint, that is also a violation.</span>
+              </li>
+              <li>
+                <i class="ti ti-eye-off" aria-hidden="true"></i>
+                <span>Your name must be kept confidential The ICC cannot tell other students, the media, or the public.</span>
+              </li>
+              <li>
+                <i class="ti ti-home-move" aria-hidden="true"></i>
+                <span>You can ask for practical help during the investigation — such as a change of class section or hostel accommodation.</span>
+              </li>
+              <li>
+                <i class="ti ti-clock" aria-hidden="true"></i>
+                <span>The inquiry must be done within 90 days. If it takes longer without explanation, you can raise this as a concern.</span>
+              </li>
+              <li>
+                <i class="ti ti-arrow-up" aria-hidden="true"></i>
+                <span>You can appeal. If unsatisfied with the ICC outcome, you can escalate to the appellate authority named in your institution's policy.</span>
+              </li>
+            </ul>
+          </article>
+
+          <!-- <p class="section-label">The legal framework</p> -->
+
+          <article class="law-card">
+            <h3 class="law-title">The POSH Act, 2013</h3>
+            <p class="law-year">Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act</p>
+            <p class="law-body">
+              The primary legislation covering sexual harassment in Indian workplaces — which includes educational institutions.
+              It mandates every institution to constitute an Internal Complaints Committee (ICC).
+            </p>
+            <ul class="law-points">
+              <li>Every institution with 10+ employees must have an ICC</li>
+              <li>Complaint must be filed within 3 months of the incident (extendable)</li>
+              <li>ICC must complete inquiry within 90 days</li>
+              <li>Your identity must be kept confidential by the ICC</li>
+              <li>Retaliation against complainants is strictly prohibited</li>
+            </ul>
+            <a class="law-link" href="https://www.indiacode.nic.in/bitstream/123456789/2104/1/A2013-14.pdf" target="_blank" rel="noopener">
+              <i class="ti ti-external-link" aria-hidden="true"></i>
+              Read the full Act
+            </a>
+          </article>
+
+          <article class="law-card">
+            <h3 class="law-title">UGC (Prevention, Prohibition and Redressal) Regulations, 2015</h3>
+            <p class="law-year">University Grants Commission Regulations specifically for Higher Educational Institutions</p>
+            <p class="law-body">
+              These regulations extend protections specifically to students in universities and colleges, going beyond the POSH Act.
+            </p>
+            <ul class="law-points">
+              <li>All HEIs must have an ICC — even those with fewer than 10 employees</li>
+              <li>ICC must include a student representative</li>
+              <li>Institutions must conduct gender sensitisation programmes</li>
+              <li>Non-compliant institutions can lose grants or affiliation</li>
+              <li>ICC must submit annual reports to the UGC</li>
+            </ul>
+            <a class="law-link" href="https://www.ugc.gov.in/pdfnews/7203627_UGC_regulations-harassment.pdf" target="_blank" rel="noopener">
+              <i class="ti ti-external-link" aria-hidden="true"></i>
+              Read the UGC Regulations (PDF)
+            </a>
+          </article>
+
+          <article class="law-card">
+            <h3 class="law-title">Vishaka Guidelines, 1997</h3>
+            <p class="law-year">Supreme Court of India — Vishaka v. State of Rajasthan</p>
+            <p class="law-body">
+              India's first legal framework against workplace sexual harassment, established by the Supreme Court before the POSH Act.
+              Remains relevant as interpretive guidance and defined sexual harassment to include physical, verbal, and non-verbal conduct.
+            </p>
+          </article>
+
+          <p class="section-label">Official resources</p>
+
+          <div class="links-grid">
+            <a class="ext-link" href="https://shebox.wcd.gov.in" target="_blank" rel="noopener">
+              <i class="ti ti-building-community" aria-hidden="true"></i>
+              <span><strong>SHe-Box</strong><small>Government online complaint portal — shebox.nic.in</small></span>
+              <i class="ti ti-external-link ext-link-arrow" aria-hidden="true"></i>
+            </a>
+            <a class="ext-link" href="https://ncwapps.nic.in/onlinecomplaintsv2/frmPubRegistration.aspx" target="_blank" rel="noopener">
+              <i class="ti ti-scale" aria-hidden="true"></i>
+              <span><strong>National Commission for Women</strong><small>Online complaint registration portal</small></span>
+              <i class="ti ti-external-link ext-link-arrow" aria-hidden="true"></i>
+            </a>
+            <a class="ext-link" href="https://www.ugc.ac.in" target="_blank" rel="noopener">
+              <i class="ti ti-school" aria-hidden="true"></i>
+              <span><strong>University Grants Commission</strong><small>Official UGC website — ugc.ac.in</small></span>
+              <i class="ti ti-external-link ext-link-arrow" aria-hidden="true"></i>
+            </a>
+            <a class="ext-link" href="https://lgbtqindiaresource.in" target="_blank" rel="noopener">
+              <i class="ti ti-rainbow" aria-hidden="true"></i>
+              <span><strong>LGBTQ India Resource Hub</strong><small>Directories, legal resources, mental health support, and community organisations</small></span>
+              <i class="ti ti-external-link ext-link-arrow" aria-hidden="true"></i>
+            </a>
+            <a class="ext-link" href="https://www.nazindia.org" target="_blank" rel="noopener">
+              <i class="ti ti-heart-handshake" aria-hidden="true"></i>
+              <span><strong>Naz Foundation</strong><small>LGBTQ+ advocacy, sexual health, counselling, and community support</small></span>
+              <i class="ti ti-external-link ext-link-arrow" aria-hidden="true"></i>
+            </a>
+            <a class="ext-link" href="https://icallhelpline.org" target="_blank" rel="noopener">
+              <i class="ti ti-phone" aria-hidden="true"></i>
+              <span><strong>iCall (TISS)</strong><small>Free counselling helpline — 1800-599-0019</small></span>
+              <i class="ti ti-external-link ext-link-arrow" aria-hidden="true"></i>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>The Gender Safety Net Initiative.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gender Safety Net — Student Guidance Tool</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff; --bg2: #f5f5f4; --bg3: #efede8;
+    --text: #1a1a18; --text2: #5f5e5a; --text3: #9c9a92;
+    --border: rgba(0,0,0,0.12); --border2: rgba(0,0,0,0.22);
+    --radius-md: 8px; --radius-lg: 12px;
+    --success-bg: #eaf3de; --success-text: #3b6d11; --success-border: #639922;
+    --info-bg: #e6f1fb; --info-text: #185fa5; --info-border: #378add;
+    --warn-bg: #faeeda; --warn-text: #854f0b; --warn-border: #ba7517;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1e1e1c; --bg2: #2a2a27; --bg3: #323230;
+      --text: #e8e6de; --text2: #a8a69e; --text3: #6e6c65;
+      --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
+      --success-bg: #173404; --success-text: #c0dd97; --success-border: #3b6d11;
+      --info-bg: #042c53; --info-text: #b5d4f4; --info-border: #185fa5;
+      --warn-bg: #412402; --warn-text: #fac775; --warn-border: #854f0b;
+    }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg3); color: var(--text); min-height: 100vh; }
+
+  /* Quick exit */
+  #quick-exit { position: fixed; top: 12px; right: 12px; z-index: 999; background: #a32d2d; color: #fff; border: none; border-radius: var(--radius-md); padding: 8px 14px; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  #quick-exit:hover { background: #791f1f; }
+
+  .page-wrap { max-width: 640px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  .page-header { text-align: center; margin-bottom: 1.5rem; padding-top: 2.5rem; }
+  .page-header h1 { font-size: 22px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .page-header p { font-size: 13px; color: var(--text2); }
+
+  /* Notice boxes */
+  .notice { border-radius: var(--radius-md); padding: 10px 14px; font-size: 13px; margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start; }
+  .notice i { font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+  .notice-privacy { background: var(--info-bg); border: 0.5px solid var(--info-border); color: var(--info-text); }
+  .notice-disclaimer { background: var(--warn-bg); border: 0.5px solid var(--warn-border); color: var(--warn-text); }
+  .notice p { line-height: 1.55; }
+  .notice b { font-weight: 500; }
+
+  /* Tab nav */
+  .tabs { display: flex; gap: 4px; margin-bottom: 1.25rem; background: var(--bg2); border-radius: var(--radius-lg); padding: 4px; }
+  .tab-btn { flex: 1; background: none; border: none; border-radius: var(--radius-md); padding: 8px 6px; font-size: 13px; color: var(--text2); cursor: pointer; transition: background 0.15s, color 0.15s; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .tab-btn i { font-size: 15px; }
+  .tab-btn.active { background: var(--bg); color: var(--text); border: 0.5px solid var(--border); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Tree */
+  .step-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .step-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-bottom: 6px; }
+  .step-question { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
+  .step-subtext { font-size: 13px; color: var(--text2); margin-bottom: 1rem; line-height: 1.6; }
+  .choices { display: flex; flex-direction: column; gap: 8px; }
+  .choice-btn { background: var(--bg2); border: 0.5px solid var(--border2); border-radius: var(--radius-md); padding: 10px 14px; font-size: 14px; color: var(--text); cursor: pointer; text-align: left; display: flex; align-items: center; gap: 8px; transition: background 0.15s; }
+  .choice-btn:hover { background: var(--bg3); }
+  .choice-btn i { font-size: 16px; color: var(--text2); flex-shrink: 0; }
+  .outcome-card { background: var(--bg); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .outcome-card.safe { border: 0.5px solid var(--success-border); }
+  .outcome-card.info { border: 0.5px solid var(--info-border); }
+  .outcome-card.warn { border: 0.5px solid var(--warn-border); }
+  .outcome-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .outcome-card.safe .outcome-title { color: var(--success-text); }
+  .outcome-card.info .outcome-title { color: var(--info-text); }
+  .outcome-card.warn .outcome-title { color: var(--warn-text); }
+  .outcome-body { font-size: 13px; color: var(--text2); line-height: 1.65; }
+  .resource-list { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .resource-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 10px; background: var(--bg2); border-radius: var(--radius-md); font-size: 13px; color: var(--text); }
+  .resource-item i { font-size: 15px; color: var(--text2); margin-top: 1px; flex-shrink: 0; }
+  .resource-item span { line-height: 1.5; }
+  .resource-item b { font-weight: 500; display: block; }
+  .resource-item a { color: var(--info-text); text-decoration: none; }
+  .resource-item a:hover { text-decoration: underline; }
+  .back-row { display: flex; gap: 8px; margin-top: 1rem; }
+  .back-btn, .restart-btn { background: none; border: 0.5px solid var(--border2); border-radius: var(--radius-md); padding: 7px 14px; font-size: 13px; color: var(--text2); cursor: pointer; display: flex; align-items: center; gap: 6px; }
+  .back-btn:hover, .restart-btn:hover { background: var(--bg2); }
+  .progress-dots { display: flex; gap: 5px; margin-bottom: 1.25rem; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border2); transition: background 0.2s; }
+  .dot.active { background: #378add; }
+  .dot.done { background: var(--text3); }
+  .badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; margin-bottom: 10px; font-weight: 500; }
+  .badge-warn { background: var(--warn-bg); color: var(--warn-text); }
+  .badge-info { background: var(--info-bg); color: var(--info-text); }
+  .badge-success { background: var(--success-bg); color: var(--success-text); }
+
+  /* Guidelines tab */
+  .law-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .law-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .law-year { font-size: 12px; color: var(--text3); margin-bottom: 10px; }
+  .law-body { font-size: 13px; color: var(--text2); line-height: 1.65; margin-bottom: 10px; }
+  .law-points { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
+  .law-point { display: flex; gap: 8px; font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .law-point-dot { color: var(--info-text); flex-shrink: 0; margin-top: 1px; }
+  .law-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--info-text); text-decoration: none; padding: 4px 10px; border: 0.5px solid var(--info-border); border-radius: 20px; margin-top: 4px; }
+  .law-link:hover { background: var(--info-bg); }
+  .plain-box { background: var(--success-bg); border: 0.5px solid var(--success-border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .plain-box-title { font-size: 14px; font-weight: 500; color: var(--success-text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .plain-point { display: flex; gap: 8px; font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 8px; }
+  .plain-point i { font-size: 15px; color: var(--success-text); flex-shrink: 0; margin-top: 1px; }
+  .links-grid { display: flex; flex-direction: column; gap: 8px; }
+  .ext-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-md); text-decoration: none; color: var(--text); font-size: 13px; transition: background 0.15s; }
+  .ext-link:hover { background: var(--bg2); }
+  .ext-link i { font-size: 16px; color: var(--info-text); }
+  .ext-link span { flex: 1; }
+  .ext-link b { display: block; font-weight: 500; }
+  .ext-link small { color: var(--text3); font-size: 11px; }
+  .section-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-bottom: 10px; margin-top: 1.5rem; }
+  .section-label:first-child { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<button id="quick-exit" onclick="window.location.replace('https://www.google.com')" title="Leave this page immediately">
+  <i class="ti ti-logout" aria-hidden="true"></i> Quick exit
+</button>
+
+<div class="page-wrap">
+  <div class="page-header">
+    <h1>Gender Safety Net</h1>
+    <p>Anonymous guidance for students in Indian higher education institutions</p>
+  </div>
+
+  <div class="notice notice-privacy">
+    <i class="ti ti-lock" aria-hidden="true"></i>
+    <p><b>Privacy notice:</b> This tool is fully anonymous. No data is collected, stored, or transmitted. Nothing is reported to your institution without your explicit choice. All guidance is general and does not constitute legal advice.</p>
+  </div>
+  <div class="notice notice-disclaimer">
+    <i class="ti ti-info-circle" aria-hidden="true"></i>
+    <p><b>Disclaimer:</b> Helpline numbers and institutional contacts may change. Verify current details through your institution's official website or student services office.</p>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" role="tab" aria-selected="true" onclick="switchTab('tree', this)"><i class="ti ti-git-branch" aria-hidden="true"></i> Guidance</button>
+    <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('guidelines', this)"><i class="ti ti-scale" aria-hidden="true"></i> Your rights</button>
+  </div>
+
+  <div id="tab-tree" class="tab-panel active">
+
+    <div class="plain-box" style="margin-bottom:1rem;">
+      <div class="plain-box-title">
+        <i class="ti ti-info-circle" aria-hidden="true"></i>
+        What counts as sexual harassment?
+      </div>
+
+      <div class="plain-point"><i class="ti ti-check"></i><span>Unwelcome physical contact, touching, or advances.</span></div>
+      <div class="plain-point"><i class="ti ti-check"></i><span>Requests or pressure for sexual favours.</span></div>
+      <div class="plain-point"><i class="ti ti-check"></i><span>Sexual comments, jokes, messages, or remarks.</span></div>
+      <div class="plain-point"><i class="ti ti-check"></i><span>Sharing pornography or sexually explicit content.</span></div>
+      <div class="plain-point"><i class="ti ti-check"></i><span>Stalking, repeated unwanted communication, or online harassment.</span></div>
+      <div class="plain-point"><i class="ti ti-check"></i><span>Any other unwelcome conduct of a sexual nature, whether in person or online.</span></div>
+
+      <div style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.6;">
+        If you're unsure whether your experience fits a legal definition, you can still use this tool. You do not need to label what happened before seeking support or information.
+      </div>
+    </div>
+
+    <div id="app"></div>
+  </div>
+
+  <div id="tab-guidelines" class="tab-panel">
+    <p class="section-label">The legal framework</p>
+
+    <div class="law-card">
+      <div class="law-title">The POSH Act, 2013</div>
+      <div class="law-year">Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act</div>
+      <div class="law-body">The primary legislation covering sexual harassment in Indian workplaces — which includes educational institutions. It mandates every institution to constitute an Internal Complaints Committee (ICC).</div>
+      <div class="law-points">
+        <div class="law-point"><span class="law-point-dot">→</span><span>Every institution with 10+ employees must have an ICC</span></div>
+        <div class="law-point"><span class="law-point-dot">→</span><span>Complaint must be filed within 3 months of the incident (extendable)</span></div>
+        <div class="law-point"><span class="law-point-dot">→</span><span>ICC must complete inquiry within 90 days</span></div>
+        <div class="law-point"><span class="law-point-dot">→</span><span>Your identity must be kept confidential by the ICC</span></div>
+        <div class="law-point"><span class="law-point-dot">→</span><span>Retaliation against complainants is strictly prohibited</span></div>
+      </div>
+      <a class="law-link" href="https://www.indiacode.nic.in/bitstream/123456789/2104/1/A2013-14.pdf" target="_blank" rel="noopener">
+        <i class="ti ti-external-link" aria-hidden="true"></i> Read the full Act
+      </a>
+    </div>
+
+    <div class="law-card">
+      <div class="law-title">UGC (Prevention, Prohibition and Redressal) Regulations, 2015</div>
+      <div class="law-year">University Grants Commission Regulations specifically for Higher Educational Institutions</div>
+      <div class="law-body">These regulations extend protections specifically to students in universities and colleges, going beyond the POSH Act.</div>
+      <div class="law-points">
+        <div class="law-point"><span class="law-point-dot">→</span><span>All HEIs must have an ICC — even those with fewer than 10 employees</span></div>
+        <div class="law-point"><span class="law-point-dot">→</span><span>ICC must include a student representative</span></div>
+        <div class="law-point"><span class="law-point-dot">→</span><span>Institutions must conduct gender sensitisation programmes</span></div>
+        <div class="law-point"><span class="law-point-dot">→</span><span>Non-compliant institutions can lose grants or affiliation</span></div>
+        <div class="law-point"><span class="law-point-dot">→</span><span>ICC must submit annual reports to the UGC</span></div>
+      </div>
+      <a class="law-link" href="https://www.ugc.gov.in/pdfnews/7203627_UGC_regulations-harassment.pdf" target="_blank" rel="noopener">
+        <i class="ti ti-external-link" aria-hidden="true"></i> Read the UGC Regulations (PDF)
+      </a>
+    </div>
+
+    <div class="law-card">
+      <div class="law-title">Vishaka Guidelines, 1997</div>
+      <div class="law-year">Supreme Court of India — Vishaka v. State of Rajasthan</div>
+      <div class="law-body">India's first legal framework against workplace sexual harassment, established by the Supreme Court before the POSH Act. Remains relevant as interpretive guidance and defined sexual harassment to include physical, verbal, and non-verbal conduct.</div>
+    </div>
+
+    <p class="section-label" style="margin-top:1.5rem">What this means for you — in plain language</p>
+
+    <div class="plain-box">
+      <div class="plain-box-title"><i class="ti ti-check" aria-hidden="true"></i> Your rights, simply stated</div>
+      <div class="plain-point"><i class="ti ti-building" aria-hidden="true"></i><span><b>Your college must have an ICC.</b> If it doesn't, that itself is a violation you can report to the UGC.</span></div>
+      <div class="plain-point"><i class="ti ti-shield" aria-hidden="true"></i><span><b>You cannot be punished for filing.</b> If anything bad happens to you because you filed a complaint, that is also a violation.</span></div>
+      <div class="plain-point"><i class="ti ti-eye-off" aria-hidden="true"></i><span><b>Your name must be kept confidential.</b> The ICC cannot tell other students, the media, or the public.</span></div>
+      <div class="plain-point"><i class="ti ti-home-move" aria-hidden="true"></i><span><b>You can ask for practical help</b> during the investigation — such as a change of class section or hostel accommodation.</span></div>
+      <div class="plain-point"><i class="ti ti-clock" aria-hidden="true"></i><span><b>The inquiry must be done within 90 days.</b> If it takes longer without explanation, you can raise this as a concern.</span></div>
+      <div class="plain-point"><i class="ti ti-arrow-up" aria-hidden="true"></i><span><b>You can appeal.</b> If unsatisfied with the ICC outcome, you can escalate to the appellate authority named in your institution's policy.</span></div>
+    </div>
+
+    <p class="section-label" style="margin-top:1.5rem">Official resources</p>
+
+    <div class="links-grid">
+      <a class="ext-link" href="https://shebox.wcd.gov.in" target="_blank" rel="noopener">
+        <i class="ti ti-building-community" aria-hidden="true"></i>
+        <span><b>SHe-Box</b><small>Government online complaint portal — shebox.nic.in</small></span>
+        <i class="ti ti-external-link" style="font-size:14px;color:var(--text3)" aria-hidden="true"></i>
+      </a>
+      <a class="ext-link" href="https://ncwapps.nic.in/onlinecomplaintsv2/frmPubRegistration.aspx" target="_blank" rel="noopener">
+        <i class="ti ti-scale" aria-hidden="true"></i>
+        <span><b>National Commission for Women</b><small>Online complaint registration portal</small></span>
+        <i class="ti ti-external-link" style="font-size:14px;color:var(--text3)" aria-hidden="true"></i>
+      </a>
+      <a class="ext-link" href="https://www.ugc.ac.in" target="_blank" rel="noopener">
+        <i class="ti ti-school" aria-hidden="true"></i>
+        <span><b>University Grants Commission</b><small>Official UGC website — ugc.ac.in</small></span>
+        <i class="ti ti-external-link" style="font-size:14px;color:var(--text3)" aria-hidden="true"></i>
+      </a>
+      <a class="ext-link" href="https://lgbtqindiaresource.in" target="_blank" rel="noopener">
+        <i class="ti ti-rainbow" aria-hidden="true"></i>
+        <span><b>LGBTQ India Resource Hub</b><small>Directories, legal resources, mental health support, and community organisations</small></span>
+        <i class="ti ti-external-link" style="font-size:14px;color:var(--text3)" aria-hidden="true"></i>
+      </a>
+
+      <a class="ext-link" href="https://www.nazindia.org" target="_blank" rel="noopener">
+        <i class="ti ti-heart-handshake" aria-hidden="true"></i>
+        <span><b>Naz Foundation</b><small>LGBTQ+ advocacy, sexual health, counselling, and community support</small></span>
+        <i class="ti ti-external-link" style="font-size:14px;color:var(--text3)" aria-hidden="true"></i>
+      </a>
+
+      <a class="ext-link" href="https://icallhelpline.org" target="_blank" rel="noopener">
+        <i class="ti ti-phone" aria-hidden="true"></i>
+        <span><b>iCall (TISS)</b><small>Free counselling helpline — 1800-599-0019</small></span>
+        <i class="ti ti-external-link" style="font-size:14px;color:var(--text3)" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+const steps = {
+  start: {
+    label:"Step 1 of 5", question:"What happened to you?",
+    subtext:"This tool helps you understand your options and find support. Your responses are anonymous — nothing is saved or reported without your choice.",
+    choices:[
+      {icon:"ti-alert-triangle",text:"Sexual harassment (unwanted touching, comments, requests)",next:"harassment_type"},
+      {icon:"ti-mood-sad",text:"Gender-based discrimination or bullying (exclusion, hostility, unfair treatment)",next:"discrimination_type"},
+      {icon:"ti-users",text:"Hostile environment (microaggressions, unsafe atmosphere)",next:"microagg"},
+      {icon:"ti-help-circle",text:"I'm not sure what to call it",next:"unsure"}
+    ]
+  },
+  harassment_type:{label:"Step 2 of 5",question:"Who was involved?",subtext:"This helps identify the right reporting pathway.",choices:[{icon:"ti-school",text:"A faculty member, professor, or college staff",next:"harass_faculty"},{icon:"ti-user",text:"Another student",next:"harass_student"},{icon:"ti-building",text:"Someone else (contractor, visitor, etc.)",next:"harass_other"}]},
+  discrimination_type:{label:"Step 2 of 5",question:"Who was involved?",choices:[{icon:"ti-school",text:"A faculty member or staff",next:"disc_faculty"},{icon:"ti-user",text:"Another student or group of students",next:"disc_student"}]},
+  microagg:{label:"Step 2 of 5",question:"How serious does it feel to you?",subtext:"There is no wrong answer — your experience matters regardless of how others might categorise it.",choices:[{icon:"ti-flame",text:"It's ongoing and affecting my mental health / academic life",next:"micro_serious"},{icon:"ti-wave-sine",text:"It's uncomfortable but I'm managing",next:"micro_mild"}]},
+  unsure:{label:"Step 2 of 5",question:"Can you describe what happened a bit more?",choices:[{icon:"ti-hand-stop",text:"Someone made me feel physically unsafe or touched me without consent",next:"harassment_type"},{icon:"ti-eye-off",text:"I was treated differently or excluded because of my gender or identity",next:"discrimination_type"},{icon:"ti-message-circle-off",text:"Comments, jokes, or behaviour made me feel unwelcome",next:"microagg"}]},
+  harass_faculty:{label:"Step 3 of 5",question:"Do you want to file a formal complaint?",subtext:"You are protected under the POSH Act (2013) and UGC regulations. Your institution must have an Internal Complaints Committee (ICC).",choices:[{icon:"ti-file-text",text:"Yes, I want to file a complaint formally",next:"formal_icc"},{icon:"ti-ear",text:"I want to understand my options first, not commit to anything",next:"options_first"},{icon:"ti-heart",text:"I mainly need emotional support right now",next:"emotional_support"}]},
+  harass_student:{label:"Step 3 of 5",question:"Do you want to file a formal complaint?",subtext:"Harassment by students also falls under your institution's ICC jurisdiction.",choices:[{icon:"ti-file-text",text:"Yes — I want to file a complaint",next:"formal_icc"},{icon:"ti-users",text:"I'd prefer peer support or informal resolution first",next:"peer_support"},{icon:"ti-heart",text:"I mainly need emotional support right now",next:"emotional_support"}]},
+  harass_other:{label:"Step 3 of 5",question:"Would you like to report this?",choices:[{icon:"ti-file-text",text:"Yes, through the college",next:"formal_icc"},{icon:"ti-phone",text:"I'd prefer an external helpline",next:"external_help"},{icon:"ti-heart",text:"I need emotional support first",next:"emotional_support"}]},
+  disc_faculty:{label:"Step 3 of 5",question:"What kind of support are you looking for?",choices:[{icon:"ti-file-text",text:"I want to formally report the discrimination",next:"formal_icc"},{icon:"ti-ear",text:"I want to talk to a supportive faculty member first",next:"faculty_ally"},{icon:"ti-heart",text:"I need emotional support",next:"emotional_support"}]},
+  disc_student:{label:"Step 3 of 5",question:"What would feel most helpful right now?",choices:[{icon:"ti-file-text",text:"Filing a formal complaint",next:"formal_icc"},{icon:"ti-users",text:"Connecting with peer support",next:"peer_support"},{icon:"ti-heart",text:"Emotional support first",next:"emotional_support"}]},
+  micro_serious:{label:"Step 3 of 5",question:"What would help most right now?",choices:[{icon:"ti-file-text",text:"I want to report this formally",next:"formal_icc"},{icon:"ti-heart",text:"I need mental health support first",next:"emotional_support"},{icon:"ti-users",text:"I want peer support and community",next:"peer_support"}]},
+  micro_mild:{label:"Step 3 of 5",question:"What would feel right?",choices:[{icon:"ti-users",text:"Connecting with others who understand",next:"peer_support"},{icon:"ti-ear",text:"Finding a supportive faculty member",next:"faculty_ally"},{icon:"ti-file-text",text:"Documenting this in case it escalates",next:"document_only"}]},
+  options_first:{label:"Step 4 of 5",question:"Which aspect would you like to understand better?",choices:[{icon:"ti-scale",text:"How the ICC complaint process works",next:"formal_icc"},{icon:"ti-shield",text:"What protections I have during a complaint",next:"protections"},{icon:"ti-clock",text:"Typical timelines and what to expect",next:"timelines"}]},
+
+  formal_icc:{outcome:true,type:"info",badge:"badge-info",badgeText:"Formal pathway",title:"Filing a complaint with the ICC",body:"Your institution is legally required to have an Internal Complaints Committee (ICC) under the POSH Act, 2013 and UGC Regulations, 2015.\n\nYou can file a written complaint within 3 months of the incident. The ICC must complete inquiry within 90 days. Your identity must be kept confidential.",resources:[{icon:"ti-map-pin",title:"ICC office",detail:"Ask your college admin, student union, or check the institution website for ICC contact details."},{icon:"ti-file-description",title:"What to include",detail:"Date, time, location, description of incident, names of witnesses. Keep a personal copy."},{icon:"ti-shield-check",title:"Your protections",detail:"You cannot be penalised for filing. Request transfer of classes if needed during inquiry."},{icon:"ti-phone",title:"iCall helpline",detail:'<a href="https://icallhelpline.org" target="_blank" rel="noopener">1800-599-0019</a> — free, confidential counselling by TISS. Can help you prepare before filing.'}]},
+  emotional_support:{outcome:true,type:"safe",badge:"badge-success",badgeText:"Support first",title:"Getting emotional and mental health support",body:"You don't have to decide anything right now. Getting support is a valid first step. Many students find it helpful to speak to a counsellor before deciding whether to report.",resources:[{icon:"ti-phone",title:"iCall (TISS)",detail:'<a href="https://icallhelpline.org" target="_blank" rel="noopener">1800-599-0019</a> — free counselling, Monday–Saturday 8am–10pm.'},{icon:"ti-heart",title:"Vandrevala Foundation",detail:"1860-2662-345 — 24/7 mental health helpline."},{icon:"ti-building-community",title:"College counselling centre",detail:"Conversations are confidential and do not trigger automatic reporting."},{icon:"ti-users",title:"iCall online chat",detail:'<a href="https://icallhelpline.org" target="_blank" rel="noopener">icallhelpline.org</a> — text-based support if calling feels difficult.'}]},
+  peer_support:{outcome:true,type:"safe",badge:"badge-success",badgeText:"Peer support",title:"Connecting with peer and community support",body:"Peer networks provide immediate understanding and reduce isolation. Many campuses have gender cells, queer collectives, or student safety groups.",resources:[{icon:"ti-users",title:"Campus gender cell / student union",detail:"Can provide peer support and guidance without triggering formal proceedings."},{icon:"ti-building-community",title:"Sappho for Equality",detail:'LGBTQ+ support — <a href="https://sapphokolkata.in" target="_blank" rel="noopener">sapphokolkata.in</a>'},{icon:"ti-heart",title:"The Humsafar Trust",detail:'LGBTQ+ counselling, Delhi & Mumbai — <a href="https://humsafar.org" target="_blank" rel="noopener">humsafar.info</a>'},{icon:"ti-file-text",title:"Keep a record",detail:"Note dates and details even if not ready to report. Protects you if you decide to act later."}]},
+  faculty_ally:{outcome:true,type:"info",badge:"badge-info",badgeText:"Informal pathway",title:"Finding a supportive faculty member",body:"A trusted professor can offer guidance and support before — or instead of — a formal complaint.",resources:[{icon:"ti-user-check",title:"Who to approach",detail:"Faculty on the student welfare committee, gender cell, or known to be approachable."},{icon:"ti-message-circle",title:"What to say",detail:"You don't need all details ready. Start by saying you experienced something uncomfortable and want advice."},{icon:"ti-shield",title:"Confidentiality",detail:"Faculty are not obligated to report without your consent unless there is a safety risk."},{icon:"ti-phone",title:"iCall backup",detail:'<a href="https://icallhelpline.org" target="_blank" rel="noopener">1800-599-0019</a> — counsellors can also give guidance.'}]},
+  external_help:{outcome:true,type:"info",badge:"badge-info",badgeText:"External support",title:"External helplines and organisations",body:"Several organisations provide confidential support outside your institution.",resources:[{icon:"ti-phone",title:"iCall (TISS)",detail:'<a href="https://icallhelpline.org" target="_blank" rel="noopener">1800-599-0019</a> — free, Mon–Sat 8am–10pm.'},{icon:"ti-phone",title:"One Stop Centre (Sakhi)",detail:"181 — government helpline for women facing violence or harassment."},{icon:"ti-building",title:"National Commission for Women",detail:'<a href="https://ncwapps.nic.in/onlinecomplaintsv2/frmPubRegistration.aspx" target="_blank" rel="noopener">complaints.ncw.nic.in</a> — online complaint portal.'},{icon:"ti-school",title:"NTF Student Support Resources",detail:'<a href="https://ntf.education.gov.in/student-support-resources/" target="_blank" rel="noopener">ntf.education.gov.in</a> — national student wellbeing, safety, and support resources.'}]},
+  protections:{outcome:true,type:"info",badge:"badge-info",badgeText:"Know your rights",title:"Protections during a complaint",body:"The POSH Act and UGC regulations provide specific protections for complainants.",resources:[{icon:"ti-eye-off",title:"Confidentiality",detail:"Your identity must not be disclosed to the public or media by the ICC."},{icon:"ti-ban",title:"No retaliation",detail:"Any retaliation — marks, grades, opportunities — is itself a violation."},{icon:"ti-home-move",title:"Interim relief",detail:"Request transfer of classes, hostel, or work assignment during inquiry."},{icon:"ti-scale",title:"Appeal rights",detail:"Unsatisfied with ICC outcome? You can appeal to the appellate authority in your institution's policy."}]},
+  timelines:{outcome:true,type:"info",badge:"badge-info",badgeText:"What to expect",title:"Typical timeline of an ICC complaint",body:"Here is what the process looks like under POSH Act guidelines:",resources:[{icon:"ti-clock",title:"Filing window",detail:"3 months from the incident. ICC can extend by another 3 months if you show cause."},{icon:"ti-clipboard-list",title:"Acknowledgement",detail:"ICC should acknowledge and send copy to respondent within 7 days."},{icon:"ti-calendar",title:"Conciliation (optional)",detail:"You can request conciliation before inquiry. No monetary settlement is allowed."},{icon:"ti-search",title:"Inquiry",detail:"ICC must complete inquiry within 90 days and submit report within 10 days after."}]},
+  document_only:{outcome:true,type:"warn",badge:"badge-warn",badgeText:"Document for now",title:"Documenting incidents for future reference",body:"Even if not ready to act, documentation is powerful. A personal record protects you if incidents escalate.",resources:[{icon:"ti-notebook",title:"What to record",detail:"Date, time, location, what was said or done, names of anyone present. Save any messages or screenshots."},{icon:"ti-lock",title:"Keep it secure",detail:"Use a private notes app with a password. Don't share publicly."},{icon:"ti-calendar-event",title:"Timestamp everything",detail:"Write entries as soon as possible — precise memory fades quickly."},{icon:"ti-arrow-right",title:"You can always escalate later",detail:"Documentation supports a formal complaint up to 3 months after an incident, sometimes longer."}]}
+};
+
+let history = [], current = 'start';
+
+function getDots(label) {
+  if (!label) return '';
+  const [,cur,,total] = label.split(' ');
+  let h = '<div class="progress-dots">';
+  for (let i=1; i<=+total; i++) h += `<div class="dot ${i<+cur?'done':i===+cur?'active':''}"></div>`;
+  return h + '</div>';
+}
+
+function render() {
+  const app = document.getElementById('app');
+  const s = steps[current];
+  if (s.outcome) {
+    const res = s.resources.map(r => `
+      <div class="resource-item">
+        <i class="ti ${r.icon}" aria-hidden="true"></i>
+        <span><b>${r.title}</b>${r.detail}</span>
+      </div>`).join('');
+    app.innerHTML = `
+      <div class="outcome-card ${s.type}">
+        <span class="badge ${s.badge}">${s.badgeText}</span>
+        <div class="outcome-title">${s.title}</div>
+        <div class="outcome-body">${s.body.replace(/\n/g,'<br><br>')}</div>
+        <div class="resource-list">${res}</div>
+      </div>
+      <div class="back-row">
+        ${history.length?'<button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>':''}
+        <button class="restart-btn" onclick="restart()"><i class="ti ti-refresh" aria-hidden="true"></i> Start over</button>
+      </div>`;
+    return;
+  }
+  const choices = s.choices.map(c => `
+    <button class="choice-btn" onclick="choose('${c.next}')">
+      <i class="ti ${c.icon}" aria-hidden="true"></i>${c.text}
+    </button>`).join('');
+  app.innerHTML = `
+    <div class="step-card">
+      ${getDots(s.label)}
+      <div class="step-label">${s.label||''}</div>
+      <div class="step-question">${s.question}</div>
+      ${s.subtext?`<div class="step-subtext">${s.subtext}</div>`:''}
+      <div class="choices">${choices}</div>
+    </div>
+    ${history.length?'<div class="back-row"><button class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button></div>':''}`;
+}
+
+function choose(next) { history.push(current); current = next; render(); }
+function goBack() { if (history.length) { current = history.pop(); render(); } }
+function restart() { history = []; current = 'start'; render(); }
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+render();
+</script>
+</body>
+</html>
