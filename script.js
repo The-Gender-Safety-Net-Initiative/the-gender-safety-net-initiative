@@ -874,7 +874,19 @@ function initPanelSwitching() {
   });
 }
 
+function initCollapsibles() {
+  document.querySelectorAll(".info-panel-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      const body = document.getElementById(btn.getAttribute("aria-controls"));
+      if (body) body.hidden = expanded;
+    });
+  });
+}
+
 initQuickExit();
 initHeaderVisibility();
 initGuide();
 initPanelSwitching();
+initCollapsibles();
