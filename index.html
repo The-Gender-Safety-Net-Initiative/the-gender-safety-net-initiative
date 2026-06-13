@@ -9,7 +9,1215 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --navy: #0D3B66;
+  --cream: #FAF0CA;
+  --stack-gap: 1rem;
+  --cream-soft: rgba(250, 240, 202, 0.78);
+  --cream-muted: rgba(250, 240, 202, 0.55);
+  --cream-faint: rgba(250, 240, 202, 0.1);
+  --cream-border: rgba(250, 240, 202, 0.2);
+  --cream-border-strong: rgba(250, 240, 202, 0.32);
+  --surface: rgba(250, 240, 202, 0.06);
+  --surface-raised: rgba(250, 240, 202, 0.09);
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 22px;
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "DM Sans", "Segoe UI", sans-serif;
+  --transition: 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--cream);
+  min-height: 100vh;
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+/* Keep body content at a consistent 16px without changing heading scales */
+.brand-text small,
+.nav-link,
+.hero-eyebrow,
+.hero-lead,
+.notice,
+.section-intro p,
+.section-label,
+.info-list li,
+.info-panel-note,
+.rights-list li,
+.law-year,
+.law-body,
+.law-points li,
+.law-link,
+.ext-link strong,
+.ext-link small,
+.guide-card-subtitle,
+.filter-label,
+.filter-subtext,
+.filter-change,
+.filter-pill,
+.outcome-badge,
+.outcome-body,
+.resource-item strong,
+.resource-item span,
+.resource-item div,
+.guide-btn,
+.site-footer {
+  font-size: 16px;
+}
+
+.brand-text small {
+  font-size: 16px;
+}
+
+a {
+  color: inherit;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(13, 59, 102, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--cream-border);
+  opacity: 0;
+  transform: translateY(-110%);
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+body.has-scrolled .site-header {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.header-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.brand-mark {
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--cream-border-strong);
+  background: transparent;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: 0.55rem;
+  border: 1.5px solid var(--cream-muted);
+  border-radius: 4px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.brand-text strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+
+/* Force 16px font-size for all content from the disclaimer (.notices)
+   through the main panels (#panel-area), but leave headings unchanged */
+.notices :not(h1):not(h2):not(h3):not(h4):not(h5):not(h6),
+#panel-area :not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+  font-size: 16px !important;
+  line-height: 1.65;
+}
+}
+
+.brand-text small {
+  font-size: 0.68rem;
+  color: var(--cream-muted);
+  letter-spacing: 0.03em;
+  margin-top: 0.1rem;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.site-nav > * {
+  flex: 0 0 auto;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  min-height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--cream-border-strong);
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition), opacity var(--transition);
+}
+
+.quick-exit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  outline: none;
+}
+
+.quick-exit {
+  min-height: 2.5rem;
+}
+
+.nav-link.is-active,
+.panel-trigger.is-active {
+  background: var(--cream);
+  color: var(--navy);
+  border-color: var(--cream);
+}
+
+.nav-link:not(.is-active),
+.panel-trigger:not(.is-active) {
+  background: var(--navy);
+  color: var(--cream);
+  border-color: var(--cream-border-strong);
+}
+
+.nav-link[aria-current="page"] {
+  box-shadow: inset 0 0 0 1px var(--cream-border);
+}
+
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.25rem 4rem;
+}
+
+.hero {
+  padding: 3.5rem 0 2.25rem;
+}
+
+.hero-inner {
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.hero-topline {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.hero-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.08;
+  margin-bottom: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.hero-lead {
+  max-width: 34rem;
+  margin: 0 auto;
+  color: var(--cream-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.72rem 1.25rem;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--cream-border-strong);
+  background: var(--navy);
+  color: var(--cream);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.btn i {
+  font-size: 1rem;
+}
+
+.btn.is-active {
+  background: var(--cream);
+  color: var(--navy);
+  border-color: var(--cream);
+}
+
+/* Ensure any active button uses navy text (including icons) on cream background */
+.btn.is-active,
+.nav-link.is-active,
+.panel-trigger.is-active,
+.filter-pill.is-selected {
+  color: var(--navy) !important;
+}
+
+.btn.is-active i,
+.nav-link.is-active i,
+.panel-trigger.is-active i,
+.filter-pill.is-selected i {
+  color: var(--navy) !important;
+}
+
+.btn:not(.is-active):hover,
+.btn:not(.is-active):focus-visible {
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.page-panel {
+  display: none;
+}
+
+.page-panel.is-active {
+  display: block;
+}
+
+#panel-area {
+  scroll-margin-top: 5.5rem;
+}
+
+.notices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--stack-gap);
+  margin-bottom: var(--stack-gap);
+}
+
+/* Make the disclaimer notice span the full width of the notices grid */
+.notice.notice-note {
+  grid-column: 1 / -1;
+}
+
+.notice {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 1.15rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--cream-border);
+  background: var(--surface);
+  font-size: 0.9rem;
+  color: var(--cream-soft);
+}
+
+.notice i {
+  font-size: 1.35rem;
+  margin-top: 0.12rem;
+  flex-shrink: 0;
+  color: var(--cream-muted);
+}
+
+.notice strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: 0.25rem;
+}
+
+.content-section {
+  scroll-margin-top: 5.5rem;
+  margin-bottom: 4rem;
+}
+
+.section-intro {
+  margin-bottom: 1.5rem;
+}
+
+.section-intro h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.section-intro p {
+  color: var(--cream-soft);
+  max-width: 40rem;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  margin: 2rem 0 1rem;
+}
+
+.info-panel {
+  background: var(--surface);
+  border: 1px solid var(--cream-border);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.5rem;
+  margin-bottom: var(--stack-gap);
+}
+
+.info-panel-highlight {
+  background: var(--surface-raised);
+}
+
+.info-panel-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+
+#panel-guidance .info-panel-title {
+  font-size: 1.35rem;
+}
+
+/* Match the disclaimer heading style for the 'Your rights, simply stated' title */
+#panel-rights .info-panel-title {
+  font-size: 1.35rem;
+}
+
+.info-panel-title i {
+  color: var(--cream-muted);
+}
+
+.info-list {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.info-list li {
+  position: relative;
+  padding-left: 1.2rem;
+  color: var(--cream-soft);
+  font-size: 0.92rem
+}
+
+.info-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62rem;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: var(--cream-muted);
+}
+
+.info-panel-note {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--cream-border);
+  color: var(--cream-soft);
+  font-size: 0.92rem;
+}
+
+.rights-list {
+  list-style: none;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.rights-list li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  color: var(--cream-soft);
+  font-size: 0.92rem;
+}
+
+.rights-list i {
+  font-size: 1rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+  color: var(--cream-muted);
+}
+
+/* Ensure bold text inside rights list matches disclaimer content size */
+.rights-list strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.law-card {
+  background: var(--surface);
+  border: 1px solid var(--cream-border);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.5rem;
+  margin-bottom: var(--stack-gap);
+}
+
+.law-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.law-year {
+  font-size: 0.82rem;
+  color: var(--cream-muted);
+  margin-bottom: 0.85rem;
+}
+
+.law-body {
+  color: var(--cream-soft);
+  margin-bottom: 0.85rem;
+  font-size: 0.92rem;
+}
+
+.law-points {
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+}
+
+.law-points li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--cream-soft);
+  font-size: 0.92rem;
+}
+
+.law-points li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--cream-muted);
+}
+
+.law-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--cream-border-strong);
+  border-radius: 999px;
+  color: var(--cream-soft);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.law-link:hover,
+.law-link:focus-visible {
+  background: var(--cream-faint);
+  border-color: var(--cream);
+  outline: none;
+}
+
+.links-grid {
+  display: grid;
+  gap: var(--stack-gap);
+}
+
+.ext-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--cream-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--cream);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.ext-link:hover,
+.ext-link:focus-visible {
+  background: var(--surface-raised);
+  border-color: var(--cream-border-strong);
+  outline: none;
+}
+
+.ext-link > i:first-child {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  color: var(--cream-muted);
+}
+
+.ext-link span {
+  flex: 1;
+  min-width: 0;
+}
+
+.ext-link strong {
+  display: block;
+  font-weight: 600;
+}
+
+.ext-link small {
+  display: block;
+  color: var(--cream-muted);
+  font-size: 0.82rem;
+  margin-top: 0.12rem;
+}
+
+.ext-link-arrow {
+  font-size: 0.95rem;
+  color: var(--cream-muted);
+  flex-shrink: 0;
+}
+
+.guide-shell {
+  margin-top: 0.5rem;
+}
+
+.guide-card {
+  background: var(--surface);
+  border: 1px solid var(--cream-border);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem 1.5rem 1.5rem;
+  margin-bottom: var(--stack-gap);
+}
+
+.guide-card-header {
+  margin-bottom: 1.25rem;
+}
+
+.guide-card-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.guide-card-subtitle {
+  font-size: 0.9rem;
+  color: var(--cream-soft);
+}
+
+.progress-trail {
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+
+.progress-dot {
+  flex: 1;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--cream-faint);
+  transition: background var(--transition);
+}
+
+.progress-dot.is-active {
+  background: var(--cream);
+}
+
+.progress-dot.is-done {
+  background: rgba(250, 240, 202, 0.38);
+}
+
+.filter-stack {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.filter-row {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: filter-enter var(--transition) forwards;
+}
+
+.filter-row.is-settled {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes filter-enter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-row-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.filter-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--cream);
+}
+
+.filter-subtext {
+  margin-top: 0.25rem;
+  font-size: 0.86rem;
+  font-weight: 400;
+  color: var(--cream-soft);
+}
+
+.filter-change {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--cream-muted);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+  border-radius: 6px;
+  transition: color var(--transition), background var(--transition);
+}
+
+.filter-change:hover,
+.filter-change:focus-visible {
+  color: var(--cream);
+  background: var(--cream-faint);
+  outline: none;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.58rem 0.95rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--cream-border);
+  background: transparent;
+  color: var(--cream-soft);
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity var(--transition), background var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
+}
+
+.filter-pill i {
+  font-size: 0.92rem;
+}
+
+.filter-pill:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--cream-border-strong);
+  color: var(--cream);
+}
+
+.filter-pill.is-selected {
+  background: var(--cream);
+  border-color: var(--cream);
+  color: var(--navy);
+  opacity: 1;
+}
+
+.filter-pill.is-unselected {
+  opacity: 0.45;
+}
+
+.filter-pill.is-unselected:hover {
+  opacity: 0.78;
+}
+
+.filter-pill:disabled {
+  cursor: default;
+}
+
+.filter-pill .pill-check {
+  font-size: 0.85rem;
+}
+
+.outcome-panel {
+  margin-top: 1.35rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--cream-border);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: filter-enter var(--transition) forwards;
+}
+
+.outcome-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: var(--cream-faint);
+  color: var(--cream-soft);
+  margin-bottom: 0.75rem;
+}
+
+.outcome-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 0.65rem;
+}
+
+.outcome-body {
+  color: var(--cream-soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.resource-list {
+  margin-top: 1rem;
+  display: grid;
+  gap: var(--stack-gap);
+}
+
+.resource-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.85rem 0.95rem;
+  border-radius: var(--radius-sm);
+  background: var(--cream-faint);
+  border: 1px solid var(--cream-border);
+}
+
+.resource-item i {
+  font-size: 1rem;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+  color: var(--cream-muted);
+}
+
+.resource-item strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+  color: var(--cream);
+}
+
+.resource-item span,
+.resource-item div {
+  color: var(--cream-soft);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.resource-item a {
+  color: var(--cream);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.guide-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.guide-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--cream-border);
+  background: transparent;
+  color: var(--cream-soft);
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.guide-btn:hover,
+.guide-btn:focus-visible {
+  background: var(--cream-faint);
+  color: var(--cream);
+  border-color: var(--cream-border-strong);
+  outline: none;
+}
+
+.info-panel-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  text-align: left;
+  color: inherit;
+  font-family: inherit;
+}
+
+.info-panel-toggle:focus-visible {
+  outline: 2px solid var(--cream-border-strong);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.info-panel-toggle .info-panel-title {
+  margin-bottom: 0;
+}
+
+.info-panel-toggle[aria-expanded="true"] ~ div,
+.info-panel-toggle[aria-expanded="false"] ~ div {
+  margin-top: 1rem;
+}
+
+.toggle-arrow {
+  font-size: 1.1rem;
+  color: var(--cream-muted);
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.info-panel-toggle[aria-expanded="true"] .toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* ── Site footer ── */
+
+.site-footer {
+  border-top: 1px solid var(--cream-border);
+  padding: 1.5rem 1.25rem 2rem;
+  text-align: center;
+  color: var(--cream-muted);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 720px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding-top: 0.85rem;
+    padding-bottom: 0.9rem;
+  }
+
+  .brand {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .brand-text {
+    align-items: center;
+  }
+
+  .site-nav {
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .quick-exit {
+    width: auto;
+    font-size: 0.76rem;
+    padding: 0.45rem 0.72rem;
+  }
+
+  .nav-link {
+    font-size: 0.78rem;
+    padding: 0.42rem 0.72rem;
+    min-height: 2.1rem;
+  }
+
+  .notices {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .filter-pill {
+    width: 100%;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .filter-row-head {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .filter-change {
+    align-self: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── About panel ── */
+.about-hero {
+  padding: 2rem 0 1.75rem;
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+.about-hero h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+.about-hero h2 em {
+  font-style: italic;
+  font-weight: 500;
+}
+.about-hero p {
+  color: var(--cream-soft);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 34rem;
+  margin: 0 auto;
+}
+.about-body {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+.about-section {
+  margin-bottom: 2rem;
+}
+.about-section h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+.about-section p {
+  color: var(--cream-soft);
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+.about-section p:last-child { margin-bottom: 0; }
+.about-divider {
+  border: none;
+  border-top: 1px solid var(--cream-border);
+  margin: 1.75rem 0;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--cream-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.25rem;
+  text-align: center;
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-label {
+  color: var(--cream-soft);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+.how-list {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.how-list li {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.how-step {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--cream-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cream-muted);
+}
+.how-text strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  color: var(--cream);
+  font-size: 0.95rem;
+}
+.how-text span {
+  color: var(--cream-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.about-cta {
+  margin-top: 2rem;
+  padding: 1.4rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--cream-border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+.about-cta p {
+  margin-bottom: 1rem;
+  color: var(--cream-soft);
+  font-size: 0.95rem;
+}
+.author-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.author-avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid var(--cream-border-strong);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--cream-muted);
+}
+.author-info strong {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.author-info span {
+  color: var(--cream-muted);
+  font-size: 0.84rem;
+}
+@media (max-width: 520px) {
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+}
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -26,6 +1234,9 @@
         </button>
         <button type="button" class="nav-link panel-trigger" data-panel="rights" aria-selected="false">
           Your rights
+        </button>
+        <button type="button" class="nav-link panel-trigger" data-panel="about" aria-selected="false">
+          About
         </button>
         <button id="quick-exit" type="button" class="nav-link quick-exit" title="Leave this page immediately (Esc)">
           <i class="ti ti-door-exit" aria-hidden="true"></i>
@@ -53,6 +1264,10 @@
             <i class="ti ti-scale" aria-hidden="true"></i>
             Your rights
           </button>
+          <button type="button" class="btn panel-trigger" data-panel="about" aria-selected="false">
+            <i class="ti ti-info-circle" aria-hidden="true"></i>
+            About
+          </button>
         </div>
       </div>
     </section>
@@ -67,9 +1282,11 @@
         </p>
       </div>
     </div>
-    
+
     <div id="panel-area">
-      <div id="panel-guidance" class="page-panel is-active" role="tabpanel" aria-labelledby="seek-guidance-heading">
+
+      <!-- GUIDANCE PANEL -->
+      <div id="panel-guidance" class="page-panel is-active" role="tabpanel">
         <section class="content-section">
           <article class="info-panel">
             <button class="info-panel-toggle" type="button" aria-expanded="false" aria-controls="harassment-body">
@@ -104,7 +1321,7 @@
               <i class="ti ti-chevron-down toggle-arrow" aria-hidden="true"></i>
             </button>
             <div id="consent-body" hidden>
-              <p class="info-panel-note" style="margin-top:0; border-top:none; padding-top:0; margin-bottom:1rem;">
+              <p class="info-panel-note" style="margin-top:0;border-top:none;padding-top:0;margin-bottom:1rem;">
                 Consent is a clear, voluntary, and ongoing agreement to participate in an activity.
                 It must be freely given — not assumed, pressured, or implied by silence.
               </p>
@@ -125,56 +1342,28 @@
           <div id="guide-app" class="guide-shell" aria-live="polite"></div>
         </section>
       </div>
-      <div id="panel-rights" class="page-panel" role="tabpanel" aria-labelledby="your-rights-heading" hidden>
+
+      <!-- RIGHTS PANEL -->
+      <div id="panel-rights" class="page-panel" role="tabpanel" hidden>
         <section class="content-section">
-          <div class="section-intro">
-            <!-- <h2 id="your-rights-heading">Your rights</h2>
-            <p>Start with the essentials below, then explore the full legal framework and official resources.</p> -->
-          </div>
-
-          <!-- <p class="section-label">Start here</p> -->
-
           <article class="info-panel info-panel-highlight">
             <h3 class="info-panel-title">
               <i class="ti ti-shield-check" aria-hidden="true"></i> Your rights, simply stated
             </h3>
             <ul class="rights-list">
-              <li>
-                <i class="ti ti-building" aria-hidden="true"></i>
-                <span>Your college must have an ICC If it doesn't, that itself is a violation you can report to the UGC.</span>
-              </li>
-              <li>
-                <i class="ti ti-shield" aria-hidden="true"></i>
-                <span>You cannot be punished for filing If anything bad happens to you because you filed a complaint, that is also a violation.</span>
-              </li>
-              <li>
-                <i class="ti ti-eye-off" aria-hidden="true"></i>
-                <span>Your name must be kept confidential The ICC cannot tell other students, the media, or the public.</span>
-              </li>
-              <li>
-                <i class="ti ti-home-move" aria-hidden="true"></i>
-                <span>You can ask for practical help during the investigation — such as a change of class section or hostel accommodation.</span>
-              </li>
-              <li>
-                <i class="ti ti-clock" aria-hidden="true"></i>
-                <span>The inquiry must be done within 90 days. If it takes longer without explanation, you can raise this as a concern.</span>
-              </li>
-              <li>
-                <i class="ti ti-arrow-up" aria-hidden="true"></i>
-                <span>You can appeal. If unsatisfied with the ICC outcome, you can escalate to the appellate authority named in your institution's policy.</span>
-              </li>
+              <li><i class="ti ti-building" aria-hidden="true"></i><span>Your college must have an ICC. If it doesn't, that itself is a violation you can report to the UGC.</span></li>
+              <li><i class="ti ti-shield" aria-hidden="true"></i><span>You cannot be punished for filing. If anything bad happens to you because you filed a complaint, that is also a violation.</span></li>
+              <li><i class="ti ti-eye-off" aria-hidden="true"></i><span>Your name must be kept confidential. The ICC cannot tell other students, the media, or the public.</span></li>
+              <li><i class="ti ti-home-move" aria-hidden="true"></i><span>You can ask for practical help during the investigation — such as a change of class section or hostel accommodation.</span></li>
+              <li><i class="ti ti-clock" aria-hidden="true"></i><span>The inquiry must be done within 90 days. If it takes longer without explanation, you can raise this as a concern.</span></li>
+              <li><i class="ti ti-arrow-up" aria-hidden="true"></i><span>You can appeal. If unsatisfied with the ICC outcome, you can escalate to the appellate authority named in your institution's policy.</span></li>
             </ul>
           </article>
-
-          <!-- <p class="section-label">The legal framework</p> -->
 
           <article class="law-card">
             <h3 class="law-title">The POSH Act, 2013</h3>
             <p class="law-year">Sexual Harassment of Women at Workplace (Prevention, Prohibition and Redressal) Act</p>
-            <p class="law-body">
-              The primary legislation covering sexual harassment in Indian workplaces — which includes educational institutions.
-              It mandates every institution to constitute an Internal Complaints Committee (ICC).
-            </p>
+            <p class="law-body">The primary legislation covering sexual harassment in Indian workplaces — which includes educational institutions. It mandates every institution to constitute an Internal Complaints Committee (ICC).</p>
             <ul class="law-points">
               <li>Every institution with 10+ employees must have an ICC</li>
               <li>Complaint must be filed within 3 months of the incident (extendable)</li>
@@ -183,17 +1372,14 @@
               <li>Retaliation against complainants is strictly prohibited</li>
             </ul>
             <a class="law-link" href="https://www.indiacode.nic.in/bitstream/123456789/2104/1/A2013-14.pdf" target="_blank" rel="noopener">
-              <i class="ti ti-external-link" aria-hidden="true"></i>
-              Read the full Act
+              <i class="ti ti-external-link" aria-hidden="true"></i> Read the full Act
             </a>
           </article>
 
           <article class="law-card">
             <h3 class="law-title">UGC (Prevention, Prohibition and Redressal) Regulations, 2015</h3>
             <p class="law-year">University Grants Commission Regulations specifically for Higher Educational Institutions</p>
-            <p class="law-body">
-              These regulations extend protections specifically to students in universities and colleges, going beyond the POSH Act.
-            </p>
+            <p class="law-body">These regulations extend protections specifically to students in universities and colleges, going beyond the POSH Act.</p>
             <ul class="law-points">
               <li>All HEIs must have an ICC — even those with fewer than 10 employees</li>
               <li>ICC must include a student representative</li>
@@ -202,22 +1388,17 @@
               <li>ICC must submit annual reports to the UGC</li>
             </ul>
             <a class="law-link" href="https://www.ugc.gov.in/pdfnews/7203627_UGC_regulations-harassment.pdf" target="_blank" rel="noopener">
-              <i class="ti ti-external-link" aria-hidden="true"></i>
-              Read the UGC Regulations (PDF)
+              <i class="ti ti-external-link" aria-hidden="true"></i> Read the UGC Regulations (PDF)
             </a>
           </article>
 
           <article class="law-card">
             <h3 class="law-title">Vishaka Guidelines, 1997</h3>
             <p class="law-year">Supreme Court of India — Vishaka v. State of Rajasthan</p>
-            <p class="law-body">
-              India's first legal framework against workplace sexual harassment, established by the Supreme Court before the POSH Act.
-              Remains relevant as interpretive guidance and defined sexual harassment to include physical, verbal, and non-verbal conduct.
-            </p>
+            <p class="law-body">India's first legal framework against workplace sexual harassment, established by the Supreme Court before the POSH Act. Remains relevant as interpretive guidance and defined sexual harassment to include physical, verbal, and non-verbal conduct.</p>
           </article>
 
           <p class="section-label">Official resources</p>
-
           <div class="links-grid">
             <a class="ext-link" href="https://shebox.wcd.gov.in" target="_blank" rel="noopener">
               <i class="ti ti-building-community" aria-hidden="true"></i>
@@ -252,6 +1433,120 @@
           </div>
         </section>
       </div>
+
+      <!-- ABOUT PANEL -->
+      <div id="panel-about" class="page-panel" role="tabpanel" hidden>
+        <section class="content-section">
+
+          <div class="about-hero">
+            <p class="hero-eyebrow">About this project</p>
+            <h2>Why this tool <em>exists.</em></h2>
+            <p>The Gender Safety Net Initiative began as a research question and grew into something more concrete — a tool built from real data, for real students.</p>
+          </div>
+
+          <div class="about-body">
+
+            <div class="about-section">
+              <h3>The problem</h3>
+              <p>Indian universities are required by law to have Internal Complaints Committees. The POSH Act has been in force since 2013. The UGC issued specific regulations for higher education in 2015. On paper, the framework exists.</p>
+              <p>In practice, most students have never had any of it explained to them. When something happens — harassment, discrimination, a hostile classroom — the systems that are supposed to help are invisible, confusing, or simply not trusted. Students stay silent, not because nothing happened, but because every pathway to help feels too difficult, too exposed, or too unlikely to work.</p>
+              <p>This project started with a simple question: what is actually stopping students from accessing the protections that already exist?</p>
+            </div>
+
+            <hr class="about-divider">
+
+            <div class="about-section">
+              <h3>What the research found</h3>
+              <p>A survey of 80 students across Indian higher educational institutions produced some clear answers.</p>
+              <div class="stat-grid">
+                <div class="stat-card">
+                  <div class="stat-number">33%</div>
+                  <div class="stat-label">faced discrimination, exclusion, or hostility due to gender identity or sexual orientation</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">70%</div>
+                  <div class="stat-label">cited distrust in college authorities as their top reason for not reporting</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">67.5%</div>
+                  <div class="stat-label">were never told how the grievance mechanism at their institution works</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">97.5%</div>
+                  <div class="stat-label">said colleges must provide simpler, more accessible guidance on gender rights</div>
+                </div>
+              </div>
+              <p>The barriers were not primarily legal or structural — they were informational and psychological. Students did not know where to go, did not trust the process, and feared exposure more than the incident itself.</p>
+            </div>
+
+            <hr class="about-divider">
+
+            <div class="about-section">
+              <h3>How to use this tool</h3>
+              <p>This tool is designed to be used privately, at your own pace, with no pressure to commit to anything. Nothing you explore here is recorded or shared.</p>
+              <ul class="how-list">
+                <li>
+                  <div class="how-step">1</div>
+                  <div class="how-text">
+                    <strong>Read the definitions</strong>
+                    <span>The collapsible sections on the guidance page explain what counts as sexual harassment and what consent means — in plain language, without legal jargon.</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="how-step">2</div>
+                  <div class="how-text">
+                    <strong>Use the decision tree</strong>
+                    <span>Select the option closest to your situation. Each choice narrows the guidance to what's most relevant. You can revise any selection at any time.</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="how-step">3</div>
+                  <div class="how-text">
+                    <strong>Explore your options</strong>
+                    <span>The tool surfaces support pathways — formal complaints, peer support, mental health resources, faculty allies, or documentation guidance — based on what you're looking for.</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="how-step">4</div>
+                  <div class="how-text">
+                    <strong>Check your rights</strong>
+                    <span>The Your Rights section explains the POSH Act, UGC Regulations, and Vishaka Guidelines in plain language, and links to official government portals.</span>
+                  </div>
+                </li>
+              </ul>
+              <p style="margin-top:1rem">You do not need to know what happened to you, or what to call it, before you start. The tool is designed to help you find that clarity.</p>
+            </div>
+
+            <hr class="about-divider">
+
+            <div class="about-section">
+              <h3>Scope and limitations</h3>
+              <p>This tool provides general guidance only. It does not constitute legal advice, initiate complaints on your behalf, or guarantee any particular outcome. Helpline numbers and institutional contacts may change — always verify through your institution's official channels.</p>
+              <p>The survey data underpinning this project was collected through convenience sampling and is not nationally representative. The tool is intended as a starting point, not a substitute for professional legal or mental health support.</p>
+            </div>
+
+            <hr class="about-divider">
+
+            <div class="author-row">
+              <div class="author-avatar">PK</div>
+              <div class="author-info">
+                <strong>Pranav Khatri</strong>
+                <span>Ramjas College, University of Delhi · Class of 2026</span>
+              </div>
+            </div>
+
+            <div class="about-cta">
+              <p>Ready to use the tool? Start anonymously, at your own pace.</p>
+              <button type="button" class="btn panel-trigger" data-panel="guidance">
+                <i class="ti ti-compass" aria-hidden="true"></i>
+                Go to the guidance tool
+              </button>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
     </div>
   </main>
 
@@ -259,6 +1554,899 @@
     <p>The Gender Safety Net Initiative</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+const steps = {
+  start: {
+    // question: "Show guidelines and support pathways for:",
+    question: "",
+    // subtext:
+    //   "Browse topics at your own pace. Nothing you select is saved or shared — each tag simply narrows the information shown.",
+    choices: [
+      {
+        icon: "ti-alert-triangle",
+        text: "Sexual harassment & unwelcome conduct",
+        next: "harassment_type",
+      },
+      {
+        icon: "ti-mood-sad",
+        text: "Gender-based discrimination or bullying",
+        next: "discrimination_type",
+      },
+      {
+        icon: "ti-users",
+        text: "Hostile campus environment",
+        next: "microagg",
+      },
+      {
+        icon: "ti-help-circle",
+        text: "Not sure what to call it",
+        next: "unsure",
+      },
+    ],
+  },
+  harassment_type: {
+    question: "Show regulations regarding conduct by:",
+    subtext: "This helps identify the right reporting pathway.",
+    choices: [
+      {
+        icon: "ti-school",
+        text: "Faculty & staff",
+        next: "harass_faculty",
+      },
+      {
+        icon: "ti-user",
+        text: "Fellow students",
+        next: "harass_student",
+      },
+      {
+        icon: "ti-building",
+        text: "Contractors, visitors & others",
+        next: "harass_other",
+      },
+    ],
+  },
+  discrimination_type: {
+    question: "Show regulations regarding conduct by:",
+    choices: [
+      {
+        icon: "ti-school",
+        text: "Faculty & staff",
+        next: "disc_faculty",
+      },
+      {
+        icon: "ti-user",
+        text: "Fellow students",
+        next: "disc_student",
+      },
+    ],
+  },
+  microagg: {
+    question: "Show resources matched to:",
+    subtext:
+      "There is no wrong answer — your experience matters regardless of how others might categorise it.",
+    choices: [
+      {
+        icon: "ti-flame",
+        text: "Ongoing impact on wellbeing & studies",
+        next: "micro_serious",
+      },
+      {
+        icon: "ti-wave-sine",
+        text: "Uncomfortable but manageable day-to-day",
+        next: "micro_mild",
+      },
+    ],
+  },
+  unsure: {
+    question: "Need help narrowing? Explore by:",
+    choices: [
+      {
+        icon: "ti-hand-stop",
+        text: "Physical safety & non-consensual contact",
+        next: "harassment_type",
+      },
+      {
+        icon: "ti-eye-off",
+        text: "Different treatment based on gender or identity",
+        next: "discrimination_type",
+      },
+      {
+        icon: "ti-message-circle-off",
+        text: "Unwelcome comments, jokes, or behaviour",
+        next: "microagg",
+      },
+    ],
+  },
+  harass_faculty: {
+    question: "I am looking for:",
+    subtext:
+      "You are protected under the POSH Act (2013) and UGC regulations. Your institution must have an Internal Complaints Committee (ICC).",
+    choices: [
+      {
+        icon: "ti-file-text",
+        text: "Formal complaint process",
+        next: "formal_icc",
+      },
+      {
+        icon: "ti-ear",
+        text: "Understanding my options",
+        next: "options_first",
+      },
+      {
+        icon: "ti-heart",
+        text: "Emotional support first",
+        next: "emotional_support",
+      },
+    ],
+  },
+  harass_student: {
+    question: "I am looking for:",
+    subtext: "Harassment by students also falls under your institution's ICC jurisdiction.",
+    choices: [
+      {
+        icon: "ti-file-text",
+        text: "Formal complaint process",
+        next: "formal_icc",
+      },
+      {
+        icon: "ti-users",
+        text: "Peer & informal support first",
+        next: "peer_support",
+      },
+      {
+        icon: "ti-heart",
+        text: "Emotional support first",
+        next: "emotional_support",
+      },
+    ],
+  },
+  harass_other: {
+    question: "I am looking for:",
+    choices: [
+      {
+        icon: "ti-file-text",
+        text: "Formal complaint process",
+        next: "formal_icc",
+      },
+      {
+        icon: "ti-phone",
+        text: "External helplines & organisations",
+        next: "external_help",
+      },
+      {
+        icon: "ti-heart",
+        text: "Emotional support first",
+        next: "emotional_support",
+      },
+    ],
+  },
+  disc_faculty: {
+    question: "I am looking for:",
+    choices: [
+      {
+        icon: "ti-file-text",
+        text: "Formal complaint process",
+        next: "formal_icc",
+      },
+      {
+        icon: "ti-ear",
+        text: "Supportive faculty guidance",
+        next: "faculty_ally",
+      },
+      {
+        icon: "ti-heart",
+        text: "Emotional support first",
+        next: "emotional_support",
+      },
+    ],
+  },
+  disc_student: {
+    question: "I am looking for:",
+    choices: [
+      {
+        icon: "ti-file-text",
+        text: "Formal complaint process",
+        next: "formal_icc",
+      },
+      {
+        icon: "ti-users",
+        text: "Peer & community support",
+        next: "peer_support",
+      },
+      {
+        icon: "ti-heart",
+        text: "Emotional support first",
+        next: "emotional_support",
+      },
+    ],
+  },
+  micro_serious: {
+    question: "I am looking for:",
+    choices: [
+      {
+        icon: "ti-file-text",
+        text: "Formal complaint process",
+        next: "formal_icc",
+      },
+      {
+        icon: "ti-heart",
+        text: "Emotional support first",
+        next: "emotional_support",
+      },
+      {
+        icon: "ti-users",
+        text: "Peer & community support",
+        next: "peer_support",
+      },
+    ],
+  },
+  micro_mild: {
+    question: "I am looking for:",
+    choices: [
+      {
+        icon: "ti-users",
+        text: "Peer & community support",
+        next: "peer_support",
+      },
+      {
+        icon: "ti-ear",
+        text: "Supportive faculty guidance",
+        next: "faculty_ally",
+      },
+      {
+        icon: "ti-file-text",
+        text: "Documentation guidance",
+        next: "document_only",
+      },
+    ],
+  },
+  options_first: {
+    question: "Understanding my options — focus on:",
+    choices: [
+      {
+        icon: "ti-scale",
+        text: "How the ICC complaint process works",
+        next: "formal_icc",
+      },
+      {
+        icon: "ti-shield",
+        text: "Protections during a complaint",
+        next: "protections",
+      },
+      {
+        icon: "ti-clock",
+        text: "Typical timelines & what to expect",
+        next: "timelines",
+      },
+    ],
+  },
+
+  formal_icc: {
+    outcome: true,
+    type: "info",
+    badge: "badge-info",
+    badgeText: "Formal pathway",
+    title: "Filing a complaint with the ICC",
+    body:
+      "Your institution is legally required to have an Internal Complaints Committee (ICC) under the POSH Act, 2013 and UGC Regulations, 2015. You can file a written complaint within 3 months of the incident. The ICC must complete inquiry within 90 days. Your identity must be kept confidential.",
+    resources: [
+      {
+        icon: "ti-map-pin",
+        title: "ICC office",
+        detail:
+          "Ask your college admin, student union, or check the institution website for ICC contact details.",
+      },
+      {
+        icon: "ti-file-description",
+        title: "What to include",
+        detail:
+          "Date, time, location, description of incident, names of witnesses. Keep a personal copy.",
+      },
+      {
+        icon: "ti-shield-check",
+        title: "Your protections",
+        detail:
+          "You cannot be penalised for filing. Request transfer of classes if needed during inquiry.",
+      },
+      {
+        icon: "ti-phone",
+        title: "iCall helpline",
+        detail:
+          '<a href="https://icallhelpline.org" target="_blank" rel="noopener">1800-599-0019</a> — free, confidential counselling by TISS. Can help you prepare before filing.',
+      },
+    ],
+  },
+  emotional_support: {
+    outcome: true,
+    type: "safe",
+    badge: "badge-success",
+    badgeText: "Support first",
+    title: "Getting emotional and mental health support",
+    body:
+      "You don't have to decide anything right now. Getting support is a valid first step. Many students find it helpful to speak to a counsellor before deciding whether to report.",
+    resources: [
+      {
+        icon: "ti-phone",
+        title: "iCall (TISS)",
+        detail:
+          '<a href="https://icallhelpline.org" target="_blank" rel="noopener">1800-599-0019</a> — free counselling, Monday–Saturday 8am–10pm.',
+      },
+      {
+        icon: "ti-heart",
+        title: "Vandrevala Foundation",
+        detail: "1860-2662-345 — 24/7 mental health helpline.",
+      },
+      {
+        icon: "ti-building-community",
+        title: "College counselling centre",
+        detail: "Conversations are confidential and do not trigger automatic reporting.",
+      },
+      {
+        icon: "ti-users",
+        title: "iCall online chat",
+        detail:
+          '<a href="https://icallhelpline.org" target="_blank" rel="noopener">icallhelpline.org</a> — text-based support if calling feels difficult.',
+      },
+    ],
+  },
+  peer_support: {
+    outcome: true,
+    type: "safe",
+    badge: "badge-success",
+    badgeText: "Peer support",
+    title: "Connecting with peer and community support",
+    body:
+      "Peer networks provide immediate understanding and reduce isolation. Many campuses have gender cells, queer collectives, or student safety groups.",
+    resources: [
+      {
+        icon: "ti-users",
+        title: "Campus gender cell / student union",
+        detail:
+          "Can provide peer support and guidance without triggering formal proceedings.",
+      },
+      {
+        icon: "ti-building-community",
+        title: "Sappho for Equality",
+        detail:
+          'LGBTQ+ support — <a href="https://sapphokolkata.in" target="_blank" rel="noopener">sapphokolkata.in</a>',
+      },
+      {
+        icon: "ti-heart",
+        title: "The Humsafar Trust",
+        detail:
+          'LGBTQ+ counselling, Delhi & Mumbai — <a href="https://humsafar.org" target="_blank" rel="noopener">humsafar.info</a>',
+      },
+      {
+        icon: "ti-file-text",
+        title: "Keep a record",
+        detail:
+          "Note dates and details even if not ready to report. Protects you if you decide to act later.",
+      },
+    ],
+  },
+  faculty_ally: {
+    outcome: true,
+    type: "info",
+    badge: "badge-info",
+    badgeText: "Informal pathway",
+    title: "Finding a supportive faculty member",
+    body:
+      "A trusted professor can offer guidance and support before — or instead of — a formal complaint.",
+    resources: [
+      {
+        icon: "ti-user-check",
+        title: "Who to approach",
+        detail:
+          "Faculty on the student welfare committee, gender cell, or known to be approachable.",
+      },
+      {
+        icon: "ti-message-circle",
+        title: "What to say",
+        detail:
+          "You don't need all details ready. Start by saying you experienced something uncomfortable and want advice.",
+      },
+      {
+        icon: "ti-shield",
+        title: "Confidentiality",
+        detail:
+          "Faculty are not obligated to report without your consent unless there is a safety risk.",
+      },
+      {
+        icon: "ti-phone",
+        title: "iCall backup",
+        detail:
+          '<a href="https://icallhelpline.org" target="_blank" rel="noopener">1800-599-0019</a> — counsellors can also give guidance.',
+      },
+    ],
+  },
+  external_help: {
+    outcome: true,
+    type: "info",
+    badge: "badge-info",
+    badgeText: "External support",
+    title: "External helplines and organisations",
+    body: "Several organisations provide confidential support outside your institution.",
+    resources: [
+      {
+        icon: "ti-phone",
+        title: "iCall (TISS)",
+        detail:
+          '<a href="https://icallhelpline.org" target="_blank" rel="noopener">1800-599-0019</a> — free, Mon–Sat 8am–10pm.',
+      },
+      {
+        icon: "ti-phone",
+        title: "One Stop Centre (Sakhi)",
+        detail: "181 — government helpline for women facing violence or harassment.",
+      },
+      {
+        icon: "ti-building",
+        title: "National Commission for Women",
+        detail:
+          '<a href="https://ncwapps.nic.in/onlinecomplaintsv2/frmPubRegistration.aspx" target="_blank" rel="noopener">complaints.ncw.nic.in</a> — online complaint portal.',
+      },
+      {
+        icon: "ti-school",
+        title: "NTF Student Support Resources",
+        detail:
+          '<a href="https://ntf.education.gov.in/student-support-resources/" target="_blank" rel="noopener">ntf.education.gov.in</a> — national student wellbeing, safety, and support resources.',
+      },
+    ],
+  },
+  protections: {
+    outcome: true,
+    type: "info",
+    badge: "badge-info",
+    badgeText: "Know your rights",
+    title: "Protections during a complaint",
+    body: "The POSH Act and UGC regulations provide specific protections for complainants.",
+    resources: [
+      {
+        icon: "ti-eye-off",
+        title: "Confidentiality",
+        detail: "Your identity must not be disclosed to the public or media by the ICC.",
+      },
+      {
+        icon: "ti-ban",
+        title: "No retaliation",
+        detail: "Any retaliation — marks, grades, opportunities — is itself a violation.",
+      },
+      {
+        icon: "ti-home-move",
+        title: "Interim relief",
+        detail: "Request transfer of classes, hostel, or work assignment during inquiry.",
+      },
+      {
+        icon: "ti-scale",
+        title: "Appeal rights",
+        detail:
+          "Unsatisfied with ICC outcome? You can appeal to the appellate authority in your institution's policy.",
+      },
+    ],
+  },
+  timelines: {
+    outcome: true,
+    type: "info",
+    badge: "badge-info",
+    badgeText: "What to expect",
+    title: "Typical timeline of an ICC complaint",
+    body: "Here is what the process looks like under POSH Act guidelines:",
+    resources: [
+      {
+        icon: "ti-clock",
+        title: "Filing window",
+        detail:
+          "3 months from the incident. ICC can extend by another 3 months if you show cause.",
+      },
+      {
+        icon: "ti-clipboard-list",
+        title: "Acknowledgement",
+        detail: "ICC should acknowledge and send copy to respondent within 7 days.",
+      },
+      {
+        icon: "ti-calendar",
+        title: "Conciliation (optional)",
+        detail: "You can request conciliation before inquiry. No monetary settlement is allowed.",
+      },
+      {
+        icon: "ti-search",
+        title: "Inquiry",
+        detail: "ICC must complete inquiry within 90 days and submit report within 10 days after.",
+      },
+    ],
+  },
+  document_only: {
+    outcome: true,
+    type: "warn",
+    badge: "badge-warn",
+    badgeText: "Document for now",
+    title: "Documenting incidents for future reference",
+    body:
+      "Even if not ready to act, documentation is powerful. A personal record protects you if incidents escalate.",
+    resources: [
+      {
+        icon: "ti-notebook",
+        title: "What to record",
+        detail:
+          "Date, time, location, what was said or done, names of anyone present. Save any messages or screenshots.",
+      },
+      {
+        icon: "ti-lock",
+        title: "Keep it secure",
+        detail: "Use a private notes app with a password. Don't share publicly.",
+      },
+      {
+        icon: "ti-calendar-event",
+        title: "Timestamp everything",
+        detail: "Write entries as soon as possible — precise memory fades quickly.",
+      },
+      {
+        icon: "ti-arrow-right",
+        title: "You can always escalate later",
+        detail:
+          "Documentation supports a formal complaint up to 3 months after an incident, sometimes longer.",
+      },
+    ],
+  },
+};
+
+const MAX_PROGRESS = 5;
+let trail = [];
+let currentStepId = "start";
+let outcomeId = null;
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function progressDots(activeCount, isComplete) {
+  let html = '<div class="progress-trail" aria-hidden="true">';
+  for (let i = 1; i <= MAX_PROGRESS; i += 1) {
+    let className = "progress-dot";
+    if (i < activeCount) className += " is-done";
+    else if (i === activeCount) className += " is-active";
+    if (isComplete && i <= activeCount) className += " is-done";
+    html += `<span class="${className}"></span>`;
+  }
+  html += "</div>";
+  return html;
+}
+
+function renderFilterPills(step, selectedIndex, rowIndex, isLocked) {
+  return step.choices
+    .map((choice, choiceIndex) => {
+      const isSelected = selectedIndex === choiceIndex;
+      const classes = ["filter-pill"];
+      if (isLocked) {
+        classes.push(isSelected ? "is-selected" : "is-unselected");
+      }
+      return `
+        <button
+          type="button"
+          class="${classes.join(" ")}"
+          data-action="${isLocked ? "reselect" : "select"}"
+          data-row="${rowIndex}"
+          data-choice="${choiceIndex}"
+          ${isLocked && !isSelected ? "" : ""}
+        >
+          ${isSelected ? '<i class="ti ti-check pill-check" aria-hidden="true"></i>' : `<i class="ti ${choice.icon}" aria-hidden="true"></i>`}
+          ${escapeHtml(choice.text)}
+        </button>`;
+    })
+    .join("");
+}
+
+function renderActiveRow(step) {
+  return `
+    <div class="filter-row" data-row="active">
+      <div class="filter-row-head">
+        <div>
+          <div class="filter-label">${escapeHtml(step.question)}</div>
+          ${step.subtext ? `<div class="filter-subtext">${escapeHtml(step.subtext)}</div>` : ""}
+        </div>
+      </div>
+      <div class="filter-options">
+        ${step.choices
+          .map(
+            (choice, choiceIndex) => `
+          <button
+            type="button"
+            class="filter-pill"
+            data-action="select"
+            data-choice="${choiceIndex}"
+          >
+            <i class="ti ${choice.icon}" aria-hidden="true"></i>
+            ${escapeHtml(choice.text)}
+          </button>`
+          )
+          .join("")}
+      </div>
+    </div>`;
+}
+
+function renderOutcome(outcome) {
+  const resources = outcome.resources
+    .map(
+      (resource) => `
+      <div class="resource-item">
+        <i class="ti ${resource.icon}" aria-hidden="true"></i>
+        <div>
+          <strong>${escapeHtml(resource.title)}</strong>
+          <span>${resource.detail}</span>
+        </div>
+      </div>`
+    )
+    .join("");
+
+  return `
+    <div class="outcome-panel">
+      <span class="outcome-badge">${escapeHtml(outcome.badgeText)}</span>
+      <h3 class="outcome-title">${escapeHtml(outcome.title)}</h3>
+      <div class="outcome-body">${escapeHtml(outcome.body).replace(/\n/g, "<br><br>")}</div>
+      <div class="resource-list">${resources}</div>
+    </div>`;
+}
+
+function renderGuide() {
+  const app = document.getElementById("guide-app");
+  if (!app) return;
+
+  const progressCount = Math.min(
+    MAX_PROGRESS,
+    Math.max(1, trail.length + (outcomeId ? 1 : 0))
+  );
+
+  let rowsHtml = trail
+    .map((entry, index) => {
+      const step = steps[entry.stepId];
+      return `
+        <div class="filter-row is-settled" data-row="${index}">
+          <div class="filter-row-head">
+            <div>
+              <div class="filter-label">${escapeHtml(step.question)}</div>
+              ${step.subtext && index === 0 ? `<div class="filter-subtext">${escapeHtml(step.subtext)}</div>` : ""}
+            </div>
+            <button type="button" class="filter-change" data-action="change" data-row="${index}">
+              Change
+            </button>
+          </div>
+          <div class="filter-options">
+            ${renderFilterPills(step, entry.choiceIndex, index, true)}
+          </div>
+        </div>`;
+    })
+    .join("");
+
+  if (!outcomeId) {
+    const activeStep = steps[currentStepId];
+    if (activeStep && !activeStep.outcome) {
+      rowsHtml += renderActiveRow(activeStep);
+    }
+  }
+
+  const outcomeHtml = outcomeId ? renderOutcome(steps[outcomeId]) : "";
+
+  app.innerHTML = `
+    <div class="guide-card">
+      <div class="guide-card-header">
+        <div class="guide-card-title">Show guidelines and support pathways for:</div>
+        <div class="guide-card-subtitle">Filter by topic to explore options. You can revise any selection at any time.</div>
+      </div>
+      ${progressDots(progressCount, Boolean(outcomeId))}
+      <div class="filter-stack">
+        ${rowsHtml}
+        ${outcomeHtml}
+      </div>
+      <div class="guide-actions">
+        <button type="button" class="guide-btn" data-action="restart">
+          <i class="ti ti-refresh" aria-hidden="true"></i>
+          Clear filters
+        </button>
+      </div>
+    </div>`;
+}
+
+function selectChoice(choiceIndex) {
+  const step = steps[currentStepId];
+  if (!step || step.outcome) return;
+
+  const choice = step.choices[choiceIndex];
+  if (!choice) return;
+
+  trail.push({
+    stepId: currentStepId,
+    choiceIndex,
+    next: choice.next,
+  });
+
+  const nextStep = steps[choice.next];
+  if (nextStep && nextStep.outcome) {
+    outcomeId = choice.next;
+    currentStepId = choice.next;
+  } else {
+    outcomeId = null;
+    currentStepId = choice.next;
+  }
+
+  renderGuide();
+}
+
+function changeFilter(rowIndex) {
+  trail = trail.slice(0, rowIndex);
+  outcomeId = null;
+  currentStepId = rowIndex === 0 ? "start" : trail[rowIndex - 1].next;
+  renderGuide();
+}
+
+function reselectChoice(rowIndex, choiceIndex) {
+  if (trail[rowIndex]?.choiceIndex === choiceIndex) return;
+
+  trail = trail.slice(0, rowIndex);
+  outcomeId = null;
+  currentStepId = rowIndex === 0 ? "start" : trail[rowIndex - 1].next;
+
+  const step = steps[currentStepId];
+  const choice = step?.choices[choiceIndex];
+  if (!choice) return;
+
+  trail.push({
+    stepId: currentStepId,
+    choiceIndex,
+    next: choice.next,
+  });
+
+  const nextStep = steps[choice.next];
+  if (nextStep && nextStep.outcome) {
+    outcomeId = choice.next;
+    currentStepId = choice.next;
+  } else {
+    outcomeId = null;
+    currentStepId = choice.next;
+  }
+
+  renderGuide();
+}
+
+function restartGuide() {
+  trail = [];
+  currentStepId = "start";
+  outcomeId = null;
+  renderGuide();
+}
+
+function handleGuideClick(event) {
+  const target = event.target.closest("[data-action]");
+  if (!target) return;
+
+  const action = target.dataset.action;
+
+  if (action === "select") {
+    selectChoice(Number(target.dataset.choice));
+    return;
+  }
+
+  if (action === "change") {
+    changeFilter(Number(target.dataset.row));
+    return;
+  }
+
+  if (action === "reselect") {
+    reselectChoice(Number(target.dataset.row), Number(target.dataset.choice));
+    return;
+  }
+
+  if (action === "restart") {
+    restartGuide();
+  }
+}
+
+function quickExit() {
+  window.location.replace("https://www.google.com");
+}
+
+function initHeaderVisibility() {
+  const updateHeaderState = () => {
+    document.body.classList.toggle("has-scrolled", window.scrollY > 12);
+  };
+
+  updateHeaderState();
+  window.addEventListener("scroll", updateHeaderState, { passive: true });
+}
+
+function initQuickExit() {
+  const button = document.getElementById("quick-exit");
+  if (button) {
+    button.addEventListener("click", quickExit);
+  }
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      quickExit();
+    }
+  });
+}
+
+function initGuide() {
+  const app = document.getElementById("guide-app");
+  if (!app) return;
+
+  app.addEventListener("click", handleGuideClick);
+  renderGuide();
+}
+
+function initPanelSwitching() {
+  const triggers = document.querySelectorAll(".panel-trigger");
+  const panels = document.querySelectorAll(".page-panel");
+  if (!triggers.length || !panels.length) return;
+
+  function switchPanel(panelId, scrollToContent) {
+    triggers.forEach((trigger) => {
+      const isActive = trigger.dataset.panel === panelId;
+      trigger.classList.toggle("is-active", isActive);
+      trigger.setAttribute("aria-selected", isActive ? "true" : "false");
+      if (trigger.classList.contains("nav-link")) {
+        if (isActive) trigger.setAttribute("aria-current", "page");
+        else trigger.removeAttribute("aria-current");
+      }
+    });
+
+    panels.forEach((panel) => {
+      const isActive = panel.id === `panel-${panelId}`;
+      panel.classList.toggle("is-active", isActive);
+      panel.hidden = !isActive;
+    });
+
+    const hash = panelId === "rights" ? "#your-rights" : "#guidance";
+    if (window.location.hash !== hash) {
+      history.replaceState(null, "", hash);
+    }
+
+    if (scrollToContent) {
+      document.getElementById("panel-area")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      switchPanel(trigger.dataset.panel, true);
+    });
+  });
+
+  const initialPanel =
+    window.location.hash === "#your-rights" || window.location.hash === "#rights"
+      ? "rights"
+      : "guidance";
+  switchPanel(initialPanel, false);
+
+  window.addEventListener("hashchange", () => {
+    const panelId =
+      window.location.hash === "#your-rights" || window.location.hash === "#rights"
+        ? "rights"
+        : "guidance";
+    switchPanel(panelId, false);
+  });
+}
+
+function initCollapsibles() {
+  document.querySelectorAll(".info-panel-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!expanded));
+      const body = document.getElementById(btn.getAttribute("aria-controls"));
+      if (body) body.hidden = expanded;
+    });
+  });
+}
+
+initQuickExit();
+initHeaderVisibility();
+initGuide();
+initPanelSwitching();
+initCollapsibles();
+  </script>
 </body>
 </html>
