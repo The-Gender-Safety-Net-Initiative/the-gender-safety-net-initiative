@@ -82,8 +82,8 @@ const steps = {
     choices: [
       {
         icon: "ti-file-text",
-        text: "Formal complaint process",
-        next: "formal_icc",
+        text: "Complaint process",
+        next: "studentgrievancecommittee",
       },
       {
         icon: "ti-users",
@@ -114,8 +114,8 @@ const steps = {
     choices: [
       {
         icon: "ti-file-text",
-        text: "Formal complaint process",
-        next: "formal_icc",
+        text: "Complaint process",
+        next: "studentgrievancecommittee",
       },
       {
         icon: "ti-heart",
@@ -477,7 +477,35 @@ const steps = {
       },
     ],
   },
-};
+  studentgrievancecommittee: {
+    outcome: true,
+    type: "info",
+    badge: "badge-info",
+    badgeText: "Student Grievance Committee",
+    title: "Contact college-specific WDC / Student Grievance Cell / Gender Forum",
+    body:
+      "Gender-based discrimination that does not constitute sexual harassment under POSH is not under ICC jurisdiction. Most institutions have a Women's Development Cell (WDC) or Student Grievance Committee that handles such complaints. These bodies vary by institution — some are formal, others function informally. A Gender Forum, if active in your college, may also be a first point of contact. If you are facing ragging, please refer to that option.",
+    resources: [
+      {
+        icon: "ti-map-pin",
+        title: "WDC / Student Grievance Cell",
+        detail:
+          "Contact your admin office, student union, or check your institution website to locate the relevant body.",
+      },
+      {
+        icon: "ti-file-description",
+        title: "Gender Forum",
+        detail:
+          "If your college has one, this may be a more accessible and informal first step.",
+      },
+{
+        icon: "ti-phone",
+        title: "TeleManas",
+        detail: "Call the National Mental Health Helpline at 14416",
+      }, // Closes the TeleManas resource object
+    ], // Closes the resources array
+  }, // <--- THIS WAS MISSING: Closes the studentgrievancecommittee object
+}; // Closes the steps constant
 
 const MAX_PROGRESS = 5;
 let trail = [];
