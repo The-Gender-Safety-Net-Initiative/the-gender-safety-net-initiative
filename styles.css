@@ -248,6 +248,7 @@ main {
 
 .hero h2{
   font-family: var(--font-display);
+  font-size: 2rem;
 }
 
 .hero h1 {
